@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIOMA — Inteligencia que trasciende</title>
+  <meta name="description" content="AXIOMA es un estudio ultra-exclusivo de ingeniería e inteligencia artificial. Diseñamos productos digitales, sistemas inteligentes y experiencias que parecen de otra década." />
+  <meta property="og:title" content="AXIOMA — Inteligencia que trasciende" />
+  <meta property="og:description" content="Estudio ultra-exclusivo de ingeniería e inteligencia artificial. Construimos lo imposible." />
+  <meta name="theme-color" content="#050505" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+
+  <!-- ═══════════ PRELOADER ═══════════ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">
+      <svg viewBox="0 0 72 72" width="64" height="64">
+        <path d="M36 8 L66 66 H52.5 L36 32 L19.5 66 H6 Z" fill="#f5f3ef"/>
+        <path d="M44 42 L58 14 L63 24 L52 46 Z" fill="#e01e2b"/>
+      </svg>
+    </div>
+    <div class="preloader__count" id="preloaderCount">00</div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <!-- Cursor personalizado -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <!-- Grano de película -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <header class="nav" id="nav">
+    <a href="#inicio" class="nav__logo" data-magnetic>
+      <svg viewBox="0 0 72 72" width="34" height="34" aria-hidden="true">
+        <path d="M36 8 L66 66 H52.5 L36 32 L19.5 66 H6 Z" fill="#f5f3ef"/>
+        <path d="M44 42 L58 14 L63 24 L52 46 Z" fill="#e01e2b"/>
+      </svg>
+      <span>AXIOMA</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#manifiesto" data-hover>Manifiesto</a>
+      <a href="#capacidades" data-hover>Capacidades</a>
+      <a href="#obras" data-hover>Obras</a>
+      <a href="#proceso" data-hover>Proceso</a>
+    </nav>
+    <a href="#contacto" class="btn btn--ghost nav__cta" data-magnetic>Solicitar acceso</a>
+  </header>
+
+  <main>
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero" id="inicio">
+      <canvas id="webgl" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <p class="hero__eyebrow reveal-line"><span class="tick"></span>Estudio de inteligencia artificial · Est. 2021</p>
+        <h1 class="hero__title">
+          <span class="hero__line"><span>Construimos</span></span>
+          <span class="hero__line"><span>lo <em class="red">imposible</em>.</span></span>
+        </h1>
+        <p class="hero__sub reveal-line">Software, productos y sistemas de IA para compañías que no aceptan lo ordinario. Pocas plazas. Ningún límite.</p>
+        <div class="hero__actions">
+          <a href="#obras" class="btn btn--solid" data-magnetic>Ver las obras</a>
+          <a href="#contacto" class="btn btn--outline" data-magnetic>Iniciar un proyecto</a>
+        </div>
+      </div>
+      <div class="hero__meta">
+        <span>MADRID · CDMX · MIAMI</span>
+        <span class="hero__scroll">Desliza <i></i></span>
+        <span>36.7°N — 4.4°O</span>
+      </div>
+    </section>
+
+    <!-- ═══════════ MARQUEE ═══════════ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marqueeTrack">
+        <span>IA Generativa</span><i>✦</i><span>Visión Artificial</span><i>✦</i>
+        <span>Agentes Autónomos</span><i>✦</i><span>Experiencias 3D</span><i>✦</i>
+        <span>Modelos a Medida</span><i>✦</i><span>Automatización Total</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ═══════════ MANIFIESTO ═══════════ -->
+    <section class="manifesto" id="manifiesto">
+      <p class="section-label"><span class="tick"></span>Manifiesto — 01</p>
+      <h2 class="manifesto__text" id="manifestoText">
+        No hacemos páginas web. Diseñamos <em class="red">sistemas inteligentes</em> que piensan, ven y deciden. Cada proyecto que aceptamos se construye como una obra: pocas manos, criterio absoluto y tecnología que aún no tiene nombre.
+      </h2>
+      <div class="manifesto__foot">
+        <p>Aceptamos seis clientes al año.<br/>El resto espera.</p>
+        <a href="#contacto" class="link-arrow" data-hover>Solicitar una plaza →</a>
+      </div>
+    </section>
+
+    <!-- ═══════════ STATS ═══════════ -->
+    <section class="stats">
+      <div class="stat"><span class="stat__num" data-count="47">0</span><span class="stat__label">Sistemas desplegados</span></div>
+      <div class="stat"><span class="stat__num" data-count="380" data-prefix="$" data-suffix="M">0</span><span class="stat__label">Valor generado a clientes</span></div>
+      <div class="stat"><span class="stat__num" data-count="12">0</span><span class="stat__label">Países en producción</span></div>
+      <div class="stat"><span class="stat__num" data-count="0">0</span><span class="stat__label">Proyectos fallidos</span></div>
+    </section>
+
+    <!-- ═══════════ CAPACIDADES ═══════════ -->
+    <section class="services" id="capacidades">
+      <p class="section-label"><span class="tick"></span>Capacidades — 02</p>
+      <h2 class="section-title">Lo que otros llaman <em class="red">futuro</em>,<br/>nosotros lo llamamos entrega.</h2>
+      <div class="services__grid">
+        <article class="service" data-tilt>
+          <span class="service__num">01</span>
+          <h3>Agentes de IA autónomos</h3>
+          <p>Sistemas que operan tu negocio mientras duermes: ventas, soporte, análisis y decisiones en tiempo real, entrenados sobre tu propio conocimiento.</p>
+        </article>
+        <article class="service" data-tilt>
+          <span class="service__num">02</span>
+          <h3>Productos digitales de lujo</h3>
+          <p>Aplicaciones y plataformas con dirección de arte cinematográfica. Interfaces que tus clientes recuerdan y tu competencia estudia.</p>
+        </article>
+        <article class="service" data-tilt>
+          <span class="service__num">03</span>
+          <h3>Experiencias 3D e inmersivas</h3>
+          <p>WebGL, avatares hiperrealistas, configuradores en tiempo real y escenas volumétricas que convierten una web en un espectáculo.</p>
+        </article>
+        <article class="service" data-tilt>
+          <span class="service__num">04</span>
+          <h3>Modelos de IA a medida</h3>
+          <p>Visión artificial, lenguaje y predicción entrenados para tu dominio. Tu ventaja competitiva no debería alquilarse: debería ser tuya.</p>
+        </article>
+        <article class="service" data-tilt>
+          <span class="service__num">05</span>
+          <h3>Automatización quirúrgica</h3>
+          <p>Eliminamos el 80% del trabajo repetitivo de una operación en semanas. Medimos el éxito en horas humanas devueltas.</p>
+        </article>
+        <article class="service" data-tilt>
+          <span class="service__num">06</span>
+          <h3>Ingeniería imposible</h3>
+          <p>Ese proyecto que tres agencias rechazaron por «inviable». Empiece por enseñárnoslo.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ OBRAS (scroll horizontal) ═══════════ -->
+    <section class="works" id="obras">
+      <div class="works__head">
+        <p class="section-label"><span class="tick"></span>Obras seleccionadas — 03</p>
+        <h2 class="section-title">Cuatro de cuarenta y siete.</h2>
+      </div>
+      <div class="works__pin" id="worksPin">
+        <div class="works__track" id="worksTrack">
+
+          <article class="work">
+            <div class="work__visual work__visual--halcyon"><span class="work__glyph">◈</span></div>
+            <div class="work__info">
+              <span class="work__index">W.01 — Fintech privada</span>
+              <h3>HALCYON</h3>
+              <p>Motor de riesgo con IA para una banca privada suiza: analiza 2.4M de señales de mercado por segundo y redujo pérdidas por impago un 63%.</p>
+              <ul><li>Modelo propietario</li><li>Tiempo real</li><li>$1.2B gestionados</li></ul>
+            </div>
+          </article>
+
+          <article class="work">
+            <div class="work__visual work__visual--vesper"><span class="work__glyph">⬡</span></div>
+            <div class="work__info">
+              <span class="work__index">W.02 — Retail de lujo</span>
+              <h3>VESPER</h3>
+              <p>Atelier digital para una maison europea: avatar 3D hiperrealista que asesora, prueba y vende alta joyería. Conversión ×3.8 en seis meses.</p>
+              <ul><li>Avatar 3D en tiempo real</li><li>WebGL</li><li>11 idiomas</li></ul>
+            </div>
+          </article>
+
+          <article class="work">
+            <div class="work__visual work__visual--aurea"><span class="work__glyph">✦</span></div>
+            <div class="work__info">
+              <span class="work__index">W.03 — Salud</span>
+              <h3>ÁUREA</h3>
+              <p>Visión artificial para diagnóstico por imagen en una red de 40 clínicas: detecta anomalías con 99.1% de sensibilidad y prioriza casos críticos en segundos.</p>
+              <ul><li>Visión artificial</li><li>99.1% sensibilidad</li><li>40 clínicas</li></ul>
+            </div>
+          </article>
+
+          <article class="work">
+            <div class="work__visual work__visual--nocturne"><span class="work__glyph">◇</span></div>
+            <div class="work__info">
+              <span class="work__index">W.04 — Industria</span>
+              <h3>NOCTURNE</h3>
+              <p>Gemelo digital 4D de una planta logística: simula el futuro de la operación —personas, máquinas y demanda— y decide antes de que ocurra. −41% en costes.</p>
+              <ul><li>Gemelo digital 4D</li><li>Simulación predictiva</li><li>−41% costes</li></ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PROCESO ═══════════ -->
+    <section class="process" id="proceso">
+      <p class="section-label"><span class="tick"></span>Proceso — 04</p>
+      <h2 class="section-title">Cuatro movimientos.<br/>Una <em class="red">obra</em>.</h2>
+      <ol class="process__list">
+        <li class="process__step"><span>I</span><div><h3>Audiencia privada</h3><p>Una conversación de 45 minutos. Usted trae el problema; nosotros decidimos si es digno del estudio.</p></div></li>
+        <li class="process__step"><span>II</span><div><h3>Visión</h3><p>En 10 días recibe una dirección completa: arquitectura, dirección de arte y un prototipo funcional. No un PDF.</p></div></li>
+        <li class="process__step"><span>III</span><div><h3>Construcción</h3><p>Un equipo senior dedicado, demos semanales y acceso directo al director del proyecto. Sin intermediarios.</p></div></li>
+        <li class="process__step"><span>IV</span><div><h3>Estreno</h3><p>Lanzamiento, medición y evolución. Un sistema AXIOMA nunca se entrega: se estrena.</p></div></li>
+      </ol>
+    </section>
+
+    <!-- ═══════════ TESTIMONIOS ═══════════ -->
+    <section class="quotes">
+      <p class="section-label"><span class="tick"></span>Voces — 05</p>
+      <div class="quotes__grid">
+        <blockquote class="quote" data-tilt>
+          <p>«Tres consultoras dijeron dos años. AXIOMA lo estrenó en cinco meses y ahora la junta cree que hacemos magia.»</p>
+          <footer>— CEO, grupo bancario europeo</footer>
+        </blockquote>
+        <blockquote class="quote" data-tilt>
+          <p>«No compramos software. Compramos una ventaja que la competencia todavía no sabe explicar.»</p>
+          <footer>— Directora de Innovación, maison de lujo</footer>
+        </blockquote>
+        <blockquote class="quote" data-tilt>
+          <p>«El nivel de acabado es obsceno. Cada pantalla parece un fotograma.»</p>
+          <footer>— CTO, healthtech latinoamericana</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ═══════════ CTA FINAL ═══════════ -->
+    <section class="cta" id="contacto">
+      <p class="section-label"><span class="tick"></span>Acceso — 06</p>
+      <h2 class="cta__title">Quedan <em class="red" id="ctaSlots">2</em> plazas<br/>este año.</h2>
+      <p class="cta__sub">Cuéntenos qué quiere construir. Si el proyecto está a la altura, responderemos en 48 horas.</p>
+      <a href="mailto:estudio@axioma.ai?subject=Solicitud%20de%20acceso%20—%20AXIOMA" class="btn btn--solid btn--xl" data-magnetic>Solicitar acceso</a>
+      <p class="cta__mail">estudio@axioma.ai</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <span class="footer__word">AXIOMA</span>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 AXIOMA Studio — Inteligencia que trasciende</span>
+      <span>Madrid · Ciudad de México · Miami</span>
+      <span>Diseñado y construido por AXIOMA, con IA propia.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
