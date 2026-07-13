@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AXIOMA — Ingeniería de Inteligencia Artificial</title>
-  <meta name="description" content="AXIOMA es un estudio de ingeniería e inteligencia artificial de acceso exclusivo. Sistemas inteligentes, productos digitales y experiencias que parecen de otra década." />
-  <meta property="og:title" content="AXIOMA — Ingeniería de Inteligencia Artificial" />
+  <title>CUKI LABS — Ingeniería de Inteligencia Artificial</title>
+  <meta name="description" content="CUKI LABS es un estudio de ingeniería e inteligencia artificial de acceso exclusivo. Sistemas inteligentes, productos digitales y experiencias que parecen de otra década." />
+  <meta property="og:title" content="CUKI LABS — Ingeniería de Inteligencia Artificial" />
   <meta property="og:description" content="Estudio exclusivo de ingeniería e inteligencia artificial. Construimos lo imposible." />
   <meta name="theme-color" content="#050505" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -30,6 +30,9 @@
     </div>
   </div>
 
+  <!-- Barra de progreso de scroll -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <!-- Cursor personalizado -->
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
@@ -41,10 +44,11 @@
   <header class="nav" id="nav">
     <a href="#inicio" class="nav__logo" data-magnetic>
       <svg viewBox="0 0 72 72" width="30" height="30" aria-hidden="true">
-        <path d="M36 8 L66 66 H52.5 L36 32 L19.5 66 H6 Z" fill="#f5f3ef"/>
-        <path d="M44 42 L58 14 L63 24 L52 46 Z" fill="#e01e2b"/>
+        <path d="M58 14 H26 Q14 14 14 26 V46 Q14 58 26 58 H58 V46 H30 Q28 46 28 44 V28 Q28 26 30 26 H58 Z" fill="#f5f3ef"/>
+        <path d="M40 6 L54 6 L34 66 L20 66 Z" fill="#050505"/>
+        <path d="M44 6 L54 6 L34 66 L24 66 Z" fill="#e01e2b"/>
       </svg>
-      <span>AXIOMA<i>_</i></span>
+      <span>CUKI LABS<i>_</i></span>
     </a>
     <nav class="nav__links" aria-label="Principal">
       <a href="#manifiesto" data-hover><span>01</span>Manifiesto</a>
@@ -68,7 +72,7 @@
         <p class="hero__eyebrow reveal-line"><span class="tick"></span>ESTUDIO DE INGENIERÍA · INTELIGENCIA ARTIFICIAL<span class="blink">▌</span></p>
         <h1 class="hero__title">
           <span class="hero__line"><span>CONSTRUIMOS</span></span>
-          <span class="hero__line"><span>LO <em class="red">IMPOSIBLE</em></span></span>
+          <span class="hero__line"><span>LO <em class="red glitch" data-text="IMPOSIBLE">IMPOSIBLE</em></span></span>
         </h1>
         <p class="hero__sub reveal-line">Software, productos y sistemas de IA para compañías que no aceptan lo ordinario. Ingeniería de precisión. Cero límites.</p>
         <div class="hero__actions">
@@ -103,7 +107,7 @@
         <div class="terminal" id="terminal" aria-hidden="true">
           <div class="terminal__bar">
             <i></i><i></i><i></i>
-            <span>axioma — deploy · zsh</span>
+            <span>cuki — deploy · zsh</span>
           </div>
           <pre class="terminal__body" id="terminalBody"></pre>
         </div>
@@ -162,7 +166,7 @@
       </div>
     </section>
 
-    <!-- ═══════════ OBRAS (tarjetas apiladas) ═══════════ -->
+    <!-- ═══════════ OBRAS (tarjetas apiladas holográficas) ═══════════ -->
     <section class="works" id="obras">
       <p class="section-label"><span class="tick"></span>[ 03 // OBRAS SELECCIONADAS ]</p>
       <h2 class="section-title" data-scramble>Cuatro de cuarenta y siete.</h2>
@@ -171,7 +175,11 @@
 
         <article class="work" data-work>
           <div class="work__visual work__visual--halcyon">
-            <span class="work__glyph">◈</span>
+            <span class="work__bignum">01</span>
+            <div class="work__orbit"><i></i><i></i><em></em><span class="work__glyph">◈</span></div>
+            <span class="work__scan"></span>
+            <b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b>
+            <div class="work__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <span class="work__tag">fintech · riesgo en tiempo real</span>
           </div>
           <div class="work__info">
@@ -184,7 +192,11 @@
 
         <article class="work" data-work>
           <div class="work__visual work__visual--vesper">
-            <span class="work__glyph">⬡</span>
+            <span class="work__bignum">02</span>
+            <div class="work__orbit"><i></i><i></i><em></em><span class="work__glyph">⬡</span></div>
+            <span class="work__scan"></span>
+            <b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b>
+            <div class="work__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <span class="work__tag">retail de lujo · avatar 3D</span>
           </div>
           <div class="work__info">
@@ -197,7 +209,11 @@
 
         <article class="work" data-work>
           <div class="work__visual work__visual--aurea">
-            <span class="work__glyph">✦</span>
+            <span class="work__bignum">03</span>
+            <div class="work__orbit"><i></i><i></i><em></em><span class="work__glyph">✦</span></div>
+            <span class="work__scan"></span>
+            <b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b>
+            <div class="work__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <span class="work__tag">salud · visión artificial</span>
           </div>
           <div class="work__info">
@@ -210,7 +226,11 @@
 
         <article class="work" data-work>
           <div class="work__visual work__visual--nocturne">
-            <span class="work__glyph">◇</span>
+            <span class="work__bignum">04</span>
+            <div class="work__orbit"><i></i><i></i><em></em><span class="work__glyph">◇</span></div>
+            <span class="work__scan"></span>
+            <b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b><b class="work__corner"></b>
+            <div class="work__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <span class="work__tag">industria · gemelo digital 4D</span>
           </div>
           <div class="work__info">
@@ -232,7 +252,7 @@
         <li class="process__step"><span>fase_01</span><div><h3>Audiencia privada</h3><p>Una conversación de 45 minutos. Usted trae el problema; nosotros definimos si podemos convertirlo en ventaja.</p></div></li>
         <li class="process__step"><span>fase_02</span><div><h3>Visión</h3><p>En 10 días recibe una dirección completa: arquitectura, dirección de arte y un prototipo funcional. No un PDF.</p></div></li>
         <li class="process__step"><span>fase_03</span><div><h3>Construcción</h3><p>Un equipo senior dedicado, demos semanales y acceso directo al director del proyecto. Sin intermediarios.</p></div></li>
-        <li class="process__step"><span>fase_04</span><div><h3>Estreno</h3><p>Lanzamiento, medición y evolución. Un sistema AXIOMA nunca se entrega: se estrena.</p></div></li>
+        <li class="process__step"><span>fase_04</span><div><h3>Estreno</h3><p>Lanzamiento, medición y evolución. Un sistema CUKI nunca se entrega: se estrena.</p></div></li>
       </ol>
     </section>
 
@@ -241,7 +261,7 @@
       <p class="section-label"><span class="tick"></span>[ 05 // VOCES ]</p>
       <div class="quotes__grid">
         <blockquote class="quote" data-tilt>
-          <p>«Tres consultoras dijeron dos años. AXIOMA lo estrenó en cinco meses y ahora la junta cree que hacemos magia.»</p>
+          <p>«Tres consultoras dijeron dos años. CUKI lo estrenó en cinco meses y ahora la junta cree que hacemos magia.»</p>
           <footer>— CEO, grupo bancario europeo</footer>
         </blockquote>
         <blockquote class="quote" data-tilt>
@@ -262,25 +282,50 @@
         <p class="section-label"><span class="tick"></span>[ 06 // ACCESO ]</p>
         <h2 class="cta__title" data-scramble>Acceso por <em class="red">solicitud</em>.</h2>
         <p class="cta__sub">Cuéntenos qué quiere construir. Estudiamos cada solicitud personalmente y, si hay encaje, respondemos en 48 horas.</p>
-        <a href="mailto:estudio@axioma.ai?subject=Solicitud%20de%20acceso%20—%20AXIOMA" class="btn btn--solid btn--xl" data-magnetic>[ Solicitar acceso ]</a>
-        <p class="cta__mail">estudio@axioma.ai</p>
+        <a href="mailto:estudio@cukilabs.ai?subject=Solicitud%20de%20acceso%20—%20CUKI%20LABS" class="btn btn--solid btn--xl" data-magnetic>[ Solicitar acceso ]</a>
+        <p class="cta__mail">estudio@cukilabs.ai</p>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer__top">
-      <span class="footer__word">AXIOMA</span>
+      <span class="footer__word">CUKI</span>
     </div>
     <div class="footer__bottom">
-      <span>© 2026 AXIOMA Studio</span>
+      <span>© 2026 CUKI LABS</span>
       <span>Madrid · Ciudad de México · Miami</span>
-      <span>// diseñado y construido por AXIOMA, con IA propia</span>
+      <span>// desarrollado por <b class="red">CUKI</b>, con IA propia</span>
     </div>
   </footer>
+
+  <!-- ═══════════ CUKI//CORE — IA integrada ═══════════ -->
+  <button class="core-fab" id="coreFab" aria-label="Abrir CUKI//CORE, asistente de IA">
+    <span class="core-fab__pulse"></span>
+    <svg viewBox="0 0 72 72" width="26" height="26" aria-hidden="true">
+      <path d="M58 14 H26 Q14 14 14 26 V46 Q14 58 26 58 H58 V46 H30 Q28 46 28 44 V28 Q28 26 30 26 H58 Z" fill="#f5f3ef"/>
+      <path d="M44 6 L54 6 L34 66 L24 66 Z" fill="#e01e2b"/>
+    </svg>
+    <span class="core-fab__label">CUKI//CORE</span>
+  </button>
+
+  <div class="core" id="core" aria-hidden="true" role="dialog" aria-label="CUKI//CORE — asistente de IA">
+    <div class="core__bar">
+      <span class="core__status"><i></i>CUKI//CORE · en línea</span>
+      <button class="core__close" id="coreClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="core__body" id="coreBody"></div>
+    <div class="core__chips" id="coreChips"></div>
+    <form class="core__input" id="coreForm">
+      <span class="core__prompt">$</span>
+      <input type="text" id="coreField" placeholder="pregúntame lo que quieras_" autocomplete="off" maxlength="280" />
+      <button type="submit" aria-label="Enviar">↵</button>
+    </form>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script type="module" src="js/main.js"></script>
+  <script src="js/core.js" defer></script>
 </body>
 </html>

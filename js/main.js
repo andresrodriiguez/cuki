@@ -191,7 +191,7 @@ function initPreloader(onDone) {
   if (prefersReduced) { pre.remove(); onDone(); return; }
 
   const lines = [
-    '<b>$</b> axioma --init',
+    '<b>$</b> cuki --init',
     'cargando núcleo neuronal............ <span class="ok">OK</span>',
     'compilando shaders propietarios..... <span class="ok">OK</span>',
     'sincronizando 24.000 nodos.......... <span class="ok">OK</span>',
@@ -224,13 +224,13 @@ function initTerminal() {
   if (!body) return;
 
   const script = [
-    { t: '<span class="p">$</span> axioma deploy --target production', d: 30 },
+    { t: '<span class="p">$</span> cuki deploy --target production', d: 30 },
     { t: '<span class="c">→ compilando modelo propietario......... OK</span>', d: 16 },
     { t: '<span class="c">→ 2.4M señales/segundo · latencia 11ms</span>', d: 16 },
     { t: '<span class="c">→ precisión: 99.1% · fallos: 0</span>', d: 16 },
     { t: '<span class="p">✓ sistema estrenado.</span>', d: 26 },
     { t: '', d: 0 },
-    { t: '<span class="p">$</span> axioma metrics --clients', d: 30 },
+    { t: '<span class="p">$</span> cuki metrics --clients', d: 30 },
     { t: '<span class="c">→ valor generado: $380M · países: 12</span>', d: 16 },
     { t: '<span class="p">✓ lo imposible, en producción.</span>', d: 26 },
   ];
@@ -364,6 +364,12 @@ function initAnimations() {
     .from('.hero__meta, .hero__hud', { opacity: 0, duration: 1 }, '-=0.5');
 
   if (prefersReduced) return;
+
+  // Barra de progreso de scroll (visible también en móvil)
+  gsap.to('#progress', {
+    scaleX: 1, ease: 'none',
+    scrollTrigger: { trigger: document.body, start: 'top top', end: 'max', scrub: 0.4 },
+  });
 
   // Nav: se oculta al bajar
   let lastY = 0;

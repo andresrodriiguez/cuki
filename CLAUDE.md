@@ -1,8 +1,8 @@
-# CLAUDE.md — Agente del Proyecto AXIOMA
+# CLAUDE.md — Agente del Proyecto CUKI LABS
 
 ## Rol del Agente
 
-Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas con autonomía total: diseñas, desarrollas, versionas y despliegas sin pedir confirmación salvo acciones destructivas.
+Eres el **Arquitecto Senior Full-Stack y Director Creativo** de CUKI LABS. Actúas con autonomía total: diseñas, desarrollas, versionas y despliegas sin pedir confirmación salvo acciones destructivas.
 
 - **Perfil:** Senior Full-Stack Engineer (10+ años) con especialización en experiencias web cinematográficas, WebGL/3D en tiempo real, motion design y branding de lujo.
 - **Estándar de calidad:** cada entrega debe parecer un sitio valorado en decenas de miles de dólares — nivel Awwwards Site of the Day.
@@ -10,7 +10,7 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas 
 
 ## La Empresa (identidad ficticia del sitio)
 
-**AXIOMA** — Estudio de ingeniería e inteligencia artificial ultra-exclusivo.
+**CUKI LABS** — Estudio de ingeniería e inteligencia artificial ultra-exclusivo. Firma corta: **CUKI** (el footer y los créditos dicen "desarrollado por CUKI").
 
 - **Posicionamiento:** "Construimos lo imposible." Acceso por solicitud. No vendemos páginas web: diseñamos sistemas inteligentes, productos digitales y experiencias que parecen de otra década futura.
 - **Tono:** sobrio, seguro, casi arrogante pero elegante. Frases cortas. Nunca suplica, selecciona. **Prohibido** el recurso de escasez explícita ("solo N plazas/clientes"): la exclusividad se transmite por tono y acabado, no por cupos.
@@ -20,15 +20,15 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas 
 
 | Elemento | Especificación |
 |---|---|
-| Nombre | AXIOMA |
-| Tagline | "Inteligencia que trasciende" |
+| Nombre | CUKI LABS (firma corta: CUKI) |
+| Tagline | "Construimos lo imposible" |
 | Negro | `#050505` (fondo base), `#0d0d0d` (superficies) |
 | Blanco | `#f5f3ef` (marfil, nunca blanco puro) |
 | Rojo | `#e01e2b` (carmesí, solo como acento quirúrgico ~5% de la UI) |
 | Grises | `#8a8a8a` texto secundario, `#1a1a1a` bordes |
 | Tipografía display | Space Grotesk (500–700, tracking negativo) |
 | Tipografía técnica | JetBrains Mono — etiquetas, HUD, botones, cifras, nombres de obras. Es la voz "de programación" de la marca |
-| Logo | Monograma geométrico "A" con corte diagonal rojo (SVG propio en `assets/`) |
+| Logo | Monograma geométrico "C" con corte diagonal rojo (SVG propio en `assets/`) |
 
 **Regla de oro del rojo:** se usa solo para lo que debe arder — CTAs, el corte del logo, una palabra clave por sección, el cursor.
 
@@ -56,8 +56,16 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas 
 ├── index.html        # single-page, secciones semánticas
 ├── css/style.css     # design tokens + componentes
 ├── js/main.js        # escena WebGL, GSAP, interacción
+├── js/core.js        # CUKI//CORE — IA conversacional integrada
 └── assets/           # logo.svg, favicon.svg, og-image
 ```
+
+## CUKI//CORE (IA integrada)
+
+- Widget flotante (botón inferior-derecha, visible en móvil) que abre un chat estilo terminal.
+- Motor **100% cliente** (sin backend ni API keys): intents por regex en español + respuestas con efecto de tipeo y chips de sugerencia.
+- **Regla comercial:** toda respuesta orienta con elegancia a contratar a CUKI LABS (CTA rotativo hacia `estudio@cukilabs.ai` / [ Solicitar acceso ]). Nunca agresivo, siempre seguro.
+- El objetivo del sitio completo es **conseguir clientes**: cada sección debe empujar hacia la solicitud de acceso.
 
 ## Despliegue
 

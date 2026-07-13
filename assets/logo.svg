@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" fill="none" role="img" aria-label="AXIOMA">
-  <!-- Monograma: A geométrica con corte diagonal carmesí -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 72" fill="none" role="img" aria-label="CUKI LABS">
+  <!-- Monograma: C angular con corte diagonal carmesí -->
   <g>
-    <path d="M36 6 L66 66 H52.5 L36 30 L19.5 66 H6 Z" fill="#f5f3ef"/>
-    <rect x="14" y="46" width="44" height="6" fill="#050505"/>
-    <path d="M44 40 L58 12 L63 22 L52 44 Z" fill="#e01e2b"/>
+    <path d="M58 14 H26 Q14 14 14 26 V46 Q14 58 26 58 H58 V46 H30 Q28 46 28 44 V28 Q28 26 30 26 H58 Z" fill="#f5f3ef"/>
+    <path d="M40 6 L54 6 L34 66 L20 66 Z" fill="#050505"/>
+    <path d="M44 6 L54 6 L34 66 L24 66 Z" fill="#e01e2b"/>
   </g>
-  <text x="84" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="10" fill="#f5f3ef">AXIOMA</text>
+  <text x="80" y="48" font-family="'JetBrains Mono', Consolas, monospace" font-size="30" font-weight="600" letter-spacing="8" fill="#f5f3ef">CUKI</text>
+  <text x="216" y="48" font-family="'JetBrains Mono', Consolas, monospace" font-size="30" font-weight="300" letter-spacing="8" fill="#8a8a8a">LABS</text>
 </svg>
