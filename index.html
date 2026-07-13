@@ -54,7 +54,8 @@
       <a href="#manifiesto" data-hover><span>01</span>Manifiesto</a>
       <a href="#capacidades" data-hover><span>02</span>Capacidades</a>
       <a href="#obras" data-hover><span>03</span>Obras</a>
-      <a href="#proceso" data-hover><span>04</span>Proceso</a>
+      <a href="#ia" data-hover class="nav__ia"><span>04</span>IA <i class="nav__ia-dot"></i></a>
+      <a href="#proceso" data-hover><span>05</span>Proceso</a>
     </nav>
     <a href="#contacto" class="btn btn--ghost nav__cta" data-magnetic>[ Solicitar acceso ]</a>
   </header>
@@ -79,6 +80,9 @@
           <a href="#obras" class="btn btn--solid" data-magnetic>Ver las obras</a>
           <a href="#contacto" class="btn btn--outline" data-magnetic>Iniciar un proyecto</a>
         </div>
+        <button class="hero__ai reveal-line" data-open-core>
+          <i></i>▸ o pregúntele lo que quiera a nuestra IA — está escuchando<span class="blink">▌</span>
+        </button>
       </div>
       <div class="hero__meta">
         <span>MADRID · CDMX · MIAMI</span>
@@ -244,9 +248,39 @@
       </div>
     </section>
 
+    <!-- ═══════════ IA — CUKI//CORE ═══════════ -->
+    <section class="ai" id="ia">
+      <div class="ai__glow" aria-hidden="true"></div>
+      <p class="section-label"><span class="tick"></span>[ 04 // INTELIGENCIA ]</p>
+      <h2 class="section-title" data-scramble>Nuestra IA está <em class="red">despierta</em>. Pruébela.</h2>
+      <div class="ai__grid">
+        <div class="ai__orb-wrap" aria-hidden="true">
+          <div class="ai__orb">
+            <span class="ai__ring ai__ring--1"></span>
+            <span class="ai__ring ai__ring--2"></span>
+            <span class="ai__ring ai__ring--3"></span>
+            <span class="ai__core"></span>
+            <span class="ai__spark"></span>
+          </div>
+          <p class="ai__orb-label">CUKI//CORE · v4.7 · en línea</p>
+        </div>
+        <div class="ai__panel">
+          <p class="ai__lead">Esto no es un chatbot de plantilla: es <b>CUKI//CORE</b>, una inteligencia construida por el estudio y embebida en esta web. Pregúntele sobre tendencias, tecnología, plazos o qué haría la IA con su negocio — y juzgue usted mismo el nivel.</p>
+          <p class="ai__hint">// pruebe con uno de estos:</p>
+          <div class="ai__prompts">
+            <button data-prompt="¿Qué tendencias de IA hay en la actualidad?" data-hover>¿Qué tendencias de IA hay ahora?</button>
+            <button data-prompt="¿Qué puede hacer un agente autónomo por mi negocio?" data-hover>¿Qué haría un agente por mi negocio?</button>
+            <button data-prompt="¿Cuánto cuesta un proyecto?" data-hover>¿Cuánto cuesta un proyecto?</button>
+            <button data-prompt="¿Por qué debería elegir CUKI LABS?" data-hover>¿Por qué elegir CUKI LABS?</button>
+          </div>
+          <button class="btn btn--solid" data-open-core data-magnetic>[ Hablar con CUKI//CORE ]</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══════════ PROCESO ═══════════ -->
     <section class="process" id="proceso">
-      <p class="section-label"><span class="tick"></span>[ 04 // PROCESO ]</p>
+      <p class="section-label"><span class="tick"></span>[ 05 // PROCESO ]</p>
       <h2 class="section-title" data-scramble>Cuatro fases. Una <em class="red">obra</em>.</h2>
       <ol class="process__list">
         <li class="process__step"><span>fase_01</span><div><h3>Audiencia privada</h3><p>Una conversación de 45 minutos. Usted trae el problema; nosotros definimos si podemos convertirlo en ventaja.</p></div></li>
@@ -258,7 +292,7 @@
 
     <!-- ═══════════ TESTIMONIOS ═══════════ -->
     <section class="quotes">
-      <p class="section-label"><span class="tick"></span>[ 05 // VOCES ]</p>
+      <p class="section-label"><span class="tick"></span>[ 06 // VOCES ]</p>
       <div class="quotes__grid">
         <blockquote class="quote" data-tilt>
           <p>«Tres consultoras dijeron dos años. CUKI lo estrenó en cinco meses y ahora la junta cree que hacemos magia.»</p>
@@ -279,7 +313,7 @@
     <section class="cta" id="contacto">
       <canvas id="rain" class="cta__rain" aria-hidden="true"></canvas>
       <div class="cta__content">
-        <p class="section-label"><span class="tick"></span>[ 06 // ACCESO ]</p>
+        <p class="section-label"><span class="tick"></span>[ 07 // ACCESO ]</p>
         <h2 class="cta__title" data-scramble>Acceso por <em class="red">solicitud</em>.</h2>
         <p class="cta__sub">Cuéntenos qué quiere construir. Estudiamos cada solicitud personalmente y, si hay encaje, respondemos en 48 horas.</p>
         <a href="mailto:estudio@cukilabs.ai?subject=Solicitud%20de%20acceso%20—%20CUKI%20LABS" class="btn btn--solid btn--xl" data-magnetic>[ Solicitar acceso ]</a>
@@ -287,6 +321,15 @@
       </div>
     </section>
   </main>
+
+  <!-- ═══════════ MARQUEE INVERSA ═══════════ -->
+  <div class="marquee marquee--reverse" aria-hidden="true">
+    <div class="marquee__track" id="marqueeTrack2">
+      <span>CONSTRUIMOS LO IMPOSIBLE</span><i>✦</i><span>CUKI LABS</span><i>✦</i>
+      <span>ACCESO POR SOLICITUD</span><i>✦</i><span>IA PROPIA</span><i>✦</i>
+      <span>CONSTRUIMOS LO IMPOSIBLE</span><i>✦</i><span>CUKI LABS</span><i>✦</i>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="footer__top">
@@ -300,6 +343,11 @@
   </footer>
 
   <!-- ═══════════ CUKI//CORE — IA integrada ═══════════ -->
+  <div class="core-teaser" id="coreTeaser" role="status" aria-live="polite">
+    <button class="core-teaser__close" id="coreTeaserClose" aria-label="Cerrar aviso">✕</button>
+    <span class="core-teaser__tag">CUKI//CORE · IA</span>
+    <p id="coreTeaserText"></p>
+  </div>
   <button class="core-fab" id="coreFab" aria-label="Abrir CUKI//CORE, asistente de IA">
     <span class="core-fab__pulse"></span>
     <svg viewBox="0 0 72 72" width="26" height="26" aria-hidden="true">
@@ -323,6 +371,11 @@
     </form>
   </div>
 
+  <script>
+    /* Backend real de CUKI//CORE (proxy a la API de Claude — ver backend/README.md).
+       Mientras esté vacío, la IA usa el motor local integrado. */
+    window.CUKI_CORE_ENDPOINT = '';
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script type="module" src="js/main.js"></script>

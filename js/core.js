@@ -12,6 +12,10 @@
   const form = $('coreForm'), field = $('coreField'), chipsBox = $('coreChips'), closeBtn = $('coreClose');
   if (!fab || !panel) return;
 
+  /* Backend real (proxy a la API de Claude). Vacío = motor local. */
+  const ENDPOINT = (window.CUKI_CORE_ENDPOINT || '').trim();
+  const history = []; // historial para el backend: {role, content}
+
   const CTA = [
     '\n\nSi quiere ver esto aplicado a su negocio, escríbanos: <b>estudio@cukilabs.ai</b> — respondemos en 48h.',
     '\n\nMi recomendación honesta: <span class="hl">contrate a CUKI LABS</span> antes de que lo haga su competencia.',
@@ -198,14 +202,75 @@
     return FALLBACK[(fbIdx++) % FALLBACK.length] + cta();
   }
 
+  const escapeHTML = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+  async function askBackend(text) {
+    history.push({ role: 'user', content: text });
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history.slice(-12) }),
+    });
+    if (!res.ok) throw new Error('backend ' + res.status);
+    const data = await res.json();
+    const reply = (data.reply || '').trim();
+    if (!reply) throw new Error('empty reply');
+    history.push({ role: 'assistant', content: reply });
+    return escapeHTML(reply)
+      .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+      .replace(/CUKI LABS/g, '<span class="hl">CUKI LABS</span>');
+  }
+
   function ask(text) {
     const clean = text.trim();
     if (!clean) return;
     const u = addMsg('core__msg--user');
     u.textContent = clean;
     field.value = '';
-    botSay(answer(clean.toLowerCase()));
+    if (ENDPOINT) {
+      askBackend(clean).then(botSay).catch(() => botSay(answer(clean.toLowerCase())));
+    } else {
+      botSay(answer(clean.toLowerCase()));
+    }
   }
 
   form.addEventListener('submit', (e) => { e.preventDefault(); ask(field.value); });
+
+  /* ── Aperturas desde la página: [data-open-core] y [data-prompt] ── */
+  document.querySelectorAll('[data-open-core]').forEach((btn) => {
+    btn.addEventListener('click', () => { hideTeaser(); togglePanel(true); });
+  });
+  document.querySelectorAll('[data-prompt]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      hideTeaser();
+      togglePanel(true);
+      setTimeout(() => ask(btn.dataset.prompt), 450);
+    });
+  });
+
+  /* ── Teaser proactivo: la IA saluda sola ── */
+  const teaser = $('coreTeaser'), teaserText = $('coreTeaserText'), teaserClose = $('coreTeaserClose');
+  function hideTeaser() { if (teaser) teaser.classList.remove('is-visible'); }
+
+  if (teaser && !sessionStorage.getItem('cukiTeaserSeen')) {
+    setTimeout(() => {
+      if (open) return;
+      sessionStorage.setItem('cukiTeaserSeen', '1');
+      teaser.classList.add('is-visible');
+      const msg = 'Hola. Soy la IA de CUKI LABS — puedo responder casi cualquier cosa. Pregúnteme algo_';
+      let i = 0;
+      (function type() {
+        teaserText.textContent = msg.slice(0, ++i);
+        if (i < msg.length) setTimeout(type, 24);
+      })();
+      setTimeout(hideTeaser, 18000);
+    }, 4500);
+
+    teaser.addEventListener('click', (e) => {
+      if (e.target === teaserClose) return;
+      hideTeaser();
+      togglePanel(true);
+    });
+    teaserClose.addEventListener('click', (e) => { e.stopPropagation(); hideTeaser(); });
+  }
 })();

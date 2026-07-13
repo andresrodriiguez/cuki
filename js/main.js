@@ -382,12 +382,14 @@ function initAnimations() {
     },
   });
 
-  // Marquee infinito
-  const track = document.getElementById('marqueeTrack');
-  if (track) {
+  // Marquees infinitas (la segunda en sentido contrario)
+  [['marqueeTrack', -50, 24], ['marqueeTrack2', 50, 30]].forEach(([id, x, dur]) => {
+    const track = document.getElementById(id);
+    if (!track) return;
     track.innerHTML += track.innerHTML;
-    gsap.to(track, { xPercent: -50, duration: 24, ease: 'none', repeat: -1 });
-  }
+    if (x > 0) gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: dur, ease: 'none', repeat: -1 });
+    else gsap.to(track, { xPercent: -50, duration: dur, ease: 'none', repeat: -1 });
+  });
 
   // Manifiesto: revelado palabra a palabra
   const mText = document.getElementById('manifestoText');
@@ -417,7 +419,7 @@ function initAnimations() {
   });
 
   // Reveals genéricos
-  gsap.utils.toArray('.section-label, .section-title, .service, .process__step, .quote, .terminal, .cta__title, .cta__sub, .cta .btn').forEach((el) => {
+  gsap.utils.toArray('.section-label, .section-title, .service, .process__step, .quote, .terminal, .ai__orb-wrap, .ai__lead, .ai__prompts, .cta__title, .cta__sub, .cta .btn').forEach((el) => {
     gsap.from(el, {
       opacity: 0, y: 44, duration: 1, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
@@ -437,6 +439,23 @@ function initAnimations() {
         end: 'top 12%',
         scrub: true,
       },
+    });
+  });
+
+  // Obras: parallax interno del visual (también en móvil)
+  gsap.utils.toArray('.work__visual .work__orbit').forEach((el) => {
+    gsap.fromTo(el, { y: 34 }, {
+      y: -34, ease: 'none',
+      scrollTrigger: { trigger: el.closest('.work'), start: 'top bottom', end: 'bottom top', scrub: 1 },
+    });
+  });
+
+  // Spotlight que sigue al cursor en las tarjetas de capacidades
+  document.querySelectorAll('.service').forEach((el) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   });
 

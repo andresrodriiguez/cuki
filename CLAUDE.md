@@ -63,7 +63,8 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de CUKI LABS. Actú
 ## CUKI//CORE (IA integrada)
 
 - Widget flotante (botón inferior-derecha, visible en móvil) que abre un chat estilo terminal.
-- Motor **100% cliente** (sin backend ni API keys): intents por regex en español + respuestas con efecto de tipeo y chips de sugerencia.
+- **Visibilidad máxima:** teaser proactivo que saluda solo a los ~4.5s (una vez por sesión), enlace bajo los CTAs del hero, punto rojo vivo en el nav y sección propia `[ 04 // INTELIGENCIA ]` con orbe neuronal animado y prompts de ejemplo que abren el chat pre-preguntados.
+- **Dos modos:** motor local (intents por regex, por defecto) y **backend real** — Cloudflare Worker en `backend/worker.js` que llama a la API de Claude con system prompt vendedor; se activa poniendo la URL del worker en `window.CUKI_CORE_ENDPOINT` (index.html). Si el backend falla, cae al motor local automáticamente. Instrucciones: `backend/README.md`. La API key vive solo como secreto del worker, jamás en el repo.
 - **Regla comercial:** toda respuesta orienta con elegancia a contratar a CUKI LABS (CTA rotativo hacia `estudio@cukilabs.ai` / [ Solicitar acceso ]). Nunca agresivo, siempre seguro.
 - El objetivo del sitio completo es **conseguir clientes**: cada sección debe empujar hacia la solicitud de acceso.
 
