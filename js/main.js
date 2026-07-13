@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   AXIOMA — main.js v2
+   CUKI LABS — main.js
    WebGL (Three.js) + terminal + scramble + GSAP
    ═══════════════════════════════════════════════ */
 
@@ -519,10 +519,50 @@ function initCursor() {
   });
 }
 
+/* ═══════════ CHISPAS AL TOCAR (móvil y escritorio) ═══════════ */
+function initSparks() {
+  if (prefersReduced) return;
+  window.addEventListener('pointerdown', (e) => {
+    // no sobre el chat, para no ensuciar la conversación
+    if (e.target.closest('.core, .core-fab, .core-teaser')) return;
+    const burst = document.createElement('div');
+    burst.className = 'spark-burst';
+    burst.style.left = e.clientX + 'px';
+    burst.style.top = e.clientY + 'px';
+    for (let i = 0; i < 7; i++) {
+      const s = document.createElement('i');
+      const a = (Math.PI * 2 * i) / 7 + Math.random() * 0.6;
+      const d = 22 + Math.random() * 26;
+      s.style.setProperty('--sx', Math.cos(a) * d + 'px');
+      s.style.setProperty('--sy', Math.sin(a) * d + 'px');
+      burst.appendChild(s);
+    }
+    document.body.appendChild(burst);
+    setTimeout(() => burst.remove(), 700);
+  }, { passive: true });
+}
+
+/* ═══════════ TÍTULO DE PESTAÑA VIVO ═══════════ */
+function initTitle() {
+  const base = document.title;
+  let dot = true;
+  setInterval(() => {
+    document.title = document.hidden ? 'CUKI//CORE sigue en línea_' : (dot ? base : 'CUKI LABS_');
+    dot = !dot;
+  }, 1600);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) document.title = base; });
+}
+
 /* ═══════════ ARRANQUE ═══════════ */
 initWebGL();
 initCursor();
 initTerminal();
 initScramble();
 initRain();
+initSparks();
+initTitle();
 initPreloader(() => initAnimations());
+
+console.log('%c CUKI//CORE %c sistema operativo — ¿inspeccionando el código? nos gusta la gente curiosa. estudio@cukilabs.ai ',
+  'background:#e01e2b;color:#f5f3ef;font-family:monospace;padding:4px 8px;',
+  'background:#0d0d0d;color:#8a8a8a;font-family:monospace;padding:4px 8px;');

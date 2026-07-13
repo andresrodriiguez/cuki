@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   AXIOMA — Design System v2
+   CUKI LABS — Design System
    Negro profundo · Marfil · Carmesí · Monospace
    ═══════════════════════════════════════════════ */
 
@@ -547,10 +547,75 @@ section { padding: clamp(6rem, 12vh, 10rem) clamp(1.5rem, 6vw, 6rem); position: 
   transition: border-color .3s, color .3s;
 }
 .core__input button:hover { border-color: var(--red); color: var(--red); }
+/* backdrop tras el chat (móvil) */
+.core-backdrop {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(5,5,5,.55);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s var(--ease);
+}
+.core-backdrop.is-open { opacity: 1; pointer-events: auto; }
+@media (min-width: 641px) { .core-backdrop { display: none; } }
+
+/* llamada de atención periódica del botón */
+@keyframes fabNudge {
+  0%, 86%, 100% { transform: none; }
+  88% { transform: translateY(-5px) rotate(-3deg); }
+  91% { transform: translateY(0) rotate(3deg); }
+  94% { transform: translateY(-3px) rotate(0deg); }
+}
+.core-fab { animation: fabNudge 9s ease-in-out infinite; }
+.core-fab:hover { animation-play-state: paused; }
+
 @media (max-width: 640px) {
-  .core { bottom: 0; right: 0; width: 100vw; height: 78vh; border-left: 0; border-right: 0; border-bottom: 0; }
+  .core {
+    bottom: 0; right: 0; width: 100vw;
+    height: min(86dvh, 640px);
+    border-left: 0; border-right: 0; border-bottom: 0;
+    border-top: 1px solid rgba(224,30,43,.35);
+    border-radius: 14px 14px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(102%); opacity: 1;
+    transition: transform .45s var(--ease);
+  }
+  .core.is-open { transform: none; }
+  .core::before {
+    /* asa de la hoja */
+    content: ''; position: absolute; top: .45rem; left: 50%;
+    width: 42px; height: 3px; margin-left: -21px; border-radius: 2px;
+    background: #2c2c2c;
+  }
+  .core__bar { padding-top: 1.2rem; }
+  .core__body { padding: 1rem .9rem; }
+  .core__msg { max-width: 92%; font-size: .82rem; }
+  .core__chips {
+    flex-wrap: nowrap; overflow-x: auto; padding-bottom: .7rem;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .core__chips::-webkit-scrollbar { display: none; }
+  .core__chips button { flex-shrink: 0; padding: .6rem 1rem; font-size: .7rem; }
+  /* 16px evita el auto-zoom de iOS al enfocar */
+  .core__input input { font-size: 16px; }
+  .core__input { padding: .85rem .9rem calc(.85rem + env(safe-area-inset-bottom)); }
+  .core__input button { padding: .5rem 1rem; font-size: 1rem; }
+  .core__close { font-size: 1.1rem; padding: .2rem .4rem; }
   .core-fab__label { display: none; }
-  .core-fab { padding: .95rem; border-radius: 50%; }
+  .core-fab { padding: 1.05rem; border-radius: 50%; bottom: calc(1.1rem + env(safe-area-inset-bottom)); }
+  .core-teaser { bottom: calc(5.4rem + env(safe-area-inset-bottom)); right: 1rem; }
+}
+
+/* ── Chispas al tocar/click (visible en móvil) ── */
+.spark-burst { position: fixed; z-index: 9997; pointer-events: none; width: 0; height: 0; }
+.spark-burst i {
+  position: absolute; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--red); box-shadow: 0 0 8px var(--red);
+  animation: sparkFly .6s var(--ease) forwards;
+}
+.spark-burst i:nth-child(odd) { background: var(--ivory); box-shadow: 0 0 6px rgba(245,243,239,.8); }
+@keyframes sparkFly {
+  from { transform: translate(0, 0) scale(1); opacity: 1; }
+  to { transform: translate(var(--sx), var(--sy)) scale(.2); opacity: 0; }
 }
 
 /* ── Hero: enlace a la IA ── */

@@ -118,20 +118,28 @@
   /* ── UI ── */
   let open = false, greeted = false;
 
+  const backdrop = $('coreBackdrop');
+  const isMobileChat = () => window.matchMedia('(max-width: 640px)').matches;
+
   function togglePanel(force) {
     open = force !== undefined ? force : !open;
     panel.classList.toggle('is-open', open);
     panel.setAttribute('aria-hidden', String(!open));
+    if (backdrop) backdrop.classList.toggle('is-open', open && isMobileChat());
+    // en móvil, congela el scroll del fondo mientras el chat está abierto
+    document.body.style.overflow = open && isMobileChat() ? 'hidden' : '';
     if (open && !greeted) {
       greeted = true;
       botSay('Sistema en línea. Soy <b>CUKI//CORE</b>, la IA del estudio.\n\nPregúnteme sobre tendencias, tecnología, o qué podría construir la IA para su negocio. <span class="hl">Miles de temas, una conclusión.</span>');
       renderChips();
     }
-    if (open) setTimeout(() => field.focus(), 380);
+    // en escritorio enfoca el campo; en móvil no (evita que el teclado tape el saludo)
+    if (open && !isMobileChat()) setTimeout(() => field.focus(), 380);
   }
 
   fab.addEventListener('click', () => togglePanel());
   closeBtn.addEventListener('click', () => togglePanel(false));
+  if (backdrop) backdrop.addEventListener('click', () => togglePanel(false));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) togglePanel(false); });
 
   function renderChips() {
@@ -186,6 +194,12 @@
         if (tag[1] === '/') stack.pop(); else if (!tag.endsWith('/>')) stack.push(tag.match(/<(\w+)/)[1]);
         out += tag;
         i = end + 1;
+      } else if (html[i] === '&') {
+        // una entidad (&amp; etc.) cuenta como un solo carácter visible
+        const semi = html.indexOf(';', i);
+        if (semi > -1 && semi - i <= 6) { out += html.slice(i, semi + 1); i = semi + 1; }
+        else { out += html[i++]; }
+        count++;
       } else {
         out += html[i++];
         count++;
