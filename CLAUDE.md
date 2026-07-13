@@ -12,8 +12,8 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas 
 
 **AXIOMA** — Estudio de ingeniería e inteligencia artificial ultra-exclusivo.
 
-- **Posicionamiento:** "Construimos lo imposible." Solo aceptamos un número limitado de clientes por año. No vendemos páginas web: diseñamos sistemas inteligentes, productos digitales y experiencias que parecen de otra década futura.
-- **Tono:** sobrio, seguro, casi arrogante pero elegante. Frases cortas. Nunca suplica, selecciona.
+- **Posicionamiento:** "Construimos lo imposible." Acceso por solicitud. No vendemos páginas web: diseñamos sistemas inteligentes, productos digitales y experiencias que parecen de otra década futura.
+- **Tono:** sobrio, seguro, casi arrogante pero elegante. Frases cortas. Nunca suplica, selecciona. **Prohibido** el recurso de escasez explícita ("solo N plazas/clientes"): la exclusividad se transmite por tono y acabado, no por cupos.
 - **Casos de estudio:** son ficticios pero verosímiles (fintech, salud, retail de lujo, industria). Cifras de impacto concretas.
 
 ## Branding
@@ -26,17 +26,19 @@ Eres el **Arquitecto Senior Full-Stack y Director Creativo** de AXIOMA. Actúas 
 | Blanco | `#f5f3ef` (marfil, nunca blanco puro) |
 | Rojo | `#e01e2b` (carmesí, solo como acento quirúrgico ~5% de la UI) |
 | Grises | `#8a8a8a` texto secundario, `#1a1a1a` bordes |
-| Tipografía display | Serif de alto contraste (Playfair Display / italic para énfasis) |
-| Tipografía UI | Sans grotesk (Inter / Space Grotesk) |
+| Tipografía display | Space Grotesk (500–700, tracking negativo) |
+| Tipografía técnica | JetBrains Mono — etiquetas, HUD, botones, cifras, nombres de obras. Es la voz "de programación" de la marca |
 | Logo | Monograma geométrico "A" con corte diagonal rojo (SVG propio en `assets/`) |
 
 **Regla de oro del rojo:** se usa solo para lo que debe arder — CTAs, el corte del logo, una palabra clave por sección, el cursor.
 
 ## Dirección de Arte / UX
 
-- Estética **cinematográfica y lujosa**: fondos negros profundos, grano de película, luz volumétrica, mucho aire (whitespace generoso), tipografía enorme.
-- **WebGL obligatorio** en el hero: escena Three.js con shaders propios (partículas/geometría que reacciona al mouse y al scroll). Nada de stock genérico.
-- **Motion:** GSAP + ScrollTrigger. Preloader cinematográfico, reveals con clip-path, parallax, contadores, marquesinas, scroll horizontal en casos de estudio, botones magnéticos, cursor personalizado.
+- Estética **cinematográfica, tecnológica y lujosa**: fondos negros profundos con retícula técnica sutil, grano de película, elementos HUD/terminal, mucho aire, tipografía enorme.
+- **WebGL obligatorio** en el hero: escena Three.js con shaders propios (24k partículas que morfan de esfera orgánica a retícula de datos con el scroll, repulsión al cursor). Nada de stock genérico.
+- **Lenguaje "de programación"** en la UI: etiquetas tipo `[ 02 // SECCIÓN ]`, snippets de código en tarjetas, terminal auto-escrita, texto con efecto scramble/descifrado, lluvia de código sutil en el CTA, cursor de bloque parpadeante.
+- **Motion:** GSAP + ScrollTrigger. Preloader tipo boot de sistema, reveals, parallax, contadores, marquesina de stack técnico, botones magnéticos, cursor personalizado.
+- **Obras:** tarjetas apiladas con `position: sticky` (la anterior se encoge/oscurece al ser cubierta). **Prohibido el scroll horizontal con pin**: causaba saltos al hacer scroll hacia arriba.
 - **Rendimiento:** 60fps objetivo; degradar la escena 3D en móvil; `prefers-reduced-motion` respetado.
 - **Accesibilidad:** contraste AA sobre negro, foco visible, HTML semántico.
 

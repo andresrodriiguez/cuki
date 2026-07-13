@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════
-   AXIOMA — main.js
-   Escena WebGL (Three.js) + coreografía GSAP
+   AXIOMA — main.js v2
+   WebGL (Three.js) + terminal + scramble + GSAP
    ═══════════════════════════════════════════════ */
 
 import * as THREE from 'three';
@@ -9,8 +9,9 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
 const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
 /* ═══════════ ESCENA WEBGL ═══════════
-   Nube de 24k partículas que morfa entre una esfera
-   y un toroide, con brillo carmesí y parallax al mouse. */
+   24k partículas que morfan de esfera orgánica a
+   retícula de datos (lattice cúbico), con brillo
+   carmesí y repulsión al cursor. */
 function initWebGL() {
   const canvas = document.getElementById('webgl');
   if (!canvas) return;
@@ -30,11 +31,15 @@ function initWebGL() {
 
   const COUNT = isMobile ? 9000 : 24000;
   const spherePos = new Float32Array(COUNT * 3);
-  const torusPos = new Float32Array(COUNT * 3);
+  const latticePos = new Float32Array(COUNT * 3);
   const seeds = new Float32Array(COUNT);
 
+  // lattice: puntos ordenados en una retícula cúbica (estructura de datos 3D)
+  const SIDE = Math.ceil(Math.cbrt(COUNT));
+  const SPACING = 4.4 / SIDE;
+
   for (let i = 0; i < COUNT; i++) {
-    // esfera (distribución fibonacci con ruido radial)
+    // esfera orgánica (distribución fibonacci con ruido radial)
     const t = i / COUNT;
     const phi = Math.acos(1 - 2 * t);
     const theta = Math.PI * (1 + Math.sqrt(5)) * i;
@@ -43,25 +48,25 @@ function initWebGL() {
     spherePos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     spherePos[i * 3 + 2] = r * Math.cos(phi);
 
-    // toroide
-    const u = Math.random() * Math.PI * 2;
-    const v = Math.random() * Math.PI * 2;
-    const R = 2.1, tube = 0.65 + Math.random() * 0.25;
-    torusPos[i * 3]     = (R + tube * Math.cos(v)) * Math.cos(u);
-    torusPos[i * 3 + 1] = (R + tube * Math.cos(v)) * Math.sin(u);
-    torusPos[i * 3 + 2] = tube * Math.sin(v);
+    // retícula cúbica
+    const ix = i % SIDE;
+    const iy = Math.floor(i / SIDE) % SIDE;
+    const iz = Math.floor(i / (SIDE * SIDE));
+    latticePos[i * 3]     = (ix - SIDE / 2) * SPACING;
+    latticePos[i * 3 + 1] = (iy - SIDE / 2) * SPACING;
+    latticePos[i * 3 + 2] = (iz - SIDE / 2) * SPACING;
 
     seeds[i] = Math.random();
   }
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(spherePos, 3));
-  geo.setAttribute('aTarget', new THREE.BufferAttribute(torusPos, 3));
+  geo.setAttribute('aTarget', new THREE.BufferAttribute(latticePos, 3));
   geo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
 
   const uniforms = {
     uTime:   { value: 0 },
-    uMorph:  { value: 0 },   // 0 = esfera, 1 = toroide (lo controla el scroll)
+    uMorph:  { value: 0 },   // 0 = esfera, 1 = retícula (lo controla el scroll)
     uMouse:  { value: new THREE.Vector2(0, 0) },
     uIvory:  { value: new THREE.Color('#f5f3ef') },
     uRed:    { value: new THREE.Color('#e01e2b') },
@@ -81,26 +86,31 @@ function initWebGL() {
       varying float vGlow;
 
       void main() {
-        vec3 pos = mix(position, aTarget, uMorph);
+        // cada partícula viaja con un pequeño desfase: la morfosis "barre" la nube
+        float m = clamp(uMorph * 1.35 - aSeed * 0.35, 0.0, 1.0);
+        vec3 pos = mix(position, aTarget, m);
 
-        // respiración orgánica
-        float breath = sin(uTime * 0.6 + aSeed * 20.0) * 0.08;
-        pos += normalize(pos) * breath;
+        // respiración orgánica (se congela al llegar a la retícula)
+        float breath = sin(uTime * 0.6 + aSeed * 20.0) * 0.08 * (1.0 - m);
+        pos += normalize(pos + 0.0001) * breath;
 
         // deriva individual
-        pos.x += sin(uTime * 0.4 + aSeed * 40.0) * 0.05;
-        pos.y += cos(uTime * 0.3 + aSeed * 30.0) * 0.05;
+        float drift = 1.0 - m * 0.85;
+        pos.x += sin(uTime * 0.4 + aSeed * 40.0) * 0.05 * drift;
+        pos.y += cos(uTime * 0.3 + aSeed * 30.0) * 0.05 * drift;
 
-        // repulsión sutil del mouse
-        vec2 m = uMouse * 3.0;
-        float d = distance(pos.xy, m);
-        pos.xy += normalize(pos.xy - m + 0.0001) * smoothstep(1.6, 0.0, d) * 0.45;
+        // repulsión sutil del cursor
+        vec2 mo = uMouse * 3.0;
+        float d = distance(pos.xy, mo);
+        pos.xy += normalize(pos.xy - mo + 0.0001) * smoothstep(1.6, 0.0, d) * 0.45;
 
         vec4 mv = modelViewMatrix * vec4(pos, 1.0);
         gl_Position = projectionMatrix * mv;
         gl_PointSize = (aSeed * 2.2 + 0.8) * (300.0 / -mv.z) * 0.01 + 1.2;
 
-        vGlow = smoothstep(1.9, 2.6, length(pos)) * step(0.82, aSeed);
+        // en modo retícula se "encienden" nodos como datos activos
+        float pulse = step(0.9, fract(aSeed * 7.31 + uTime * 0.22));
+        vGlow = max(smoothstep(1.9, 2.6, length(pos)) * step(0.82, aSeed), pulse * m);
       }
     `,
     fragmentShader: /* glsl */`
@@ -171,30 +181,174 @@ function initWebGL() {
   });
 }
 
-/* ═══════════ PRELOADER ═══════════ */
+/* ═══════════ PRELOADER (boot de sistema) ═══════════ */
 function initPreloader(onDone) {
   const pre = document.getElementById('preloader');
+  const log = document.getElementById('preloaderLog');
   const count = document.getElementById('preloaderCount');
   const bar = document.getElementById('preloaderBar');
   if (!pre) { onDone(); return; }
-
   if (prefersReduced) { pre.remove(); onDone(); return; }
+
+  const lines = [
+    '<b>$</b> axioma --init',
+    'cargando núcleo neuronal............ <span class="ok">OK</span>',
+    'compilando shaders propietarios..... <span class="ok">OK</span>',
+    'sincronizando 24.000 nodos.......... <span class="ok">OK</span>',
+    '<b>sistema operativo. bienvenido.</b>',
+  ];
+  lines.forEach((html, i) => {
+    setTimeout(() => { log.innerHTML += html + '\n'; }, 180 + i * 340);
+  });
 
   const state = { v: 0 };
   gsap.to(state, {
-    v: 100, duration: 1.9, ease: 'power2.inOut',
+    v: 100, duration: 2.1, ease: 'power2.inOut',
     onUpdate() {
       const n = Math.round(state.v);
-      count.textContent = String(n).padStart(2, '0');
+      count.textContent = String(n).padStart(3, '0');
       bar.style.width = n + '%';
     },
     onComplete() {
       gsap.to(pre, {
-        yPercent: -100, duration: 0.9, ease: 'power4.inOut', delay: 0.25,
+        yPercent: -100, duration: 0.9, ease: 'power4.inOut', delay: 0.3,
         onComplete() { pre.remove(); onDone(); },
       });
     },
   });
+}
+
+/* ═══════════ TERMINAL AUTO-ESCRITA ═══════════ */
+function initTerminal() {
+  const body = document.getElementById('terminalBody');
+  if (!body) return;
+
+  const script = [
+    { t: '<span class="p">$</span> axioma deploy --target production', d: 30 },
+    { t: '<span class="c">→ compilando modelo propietario......... OK</span>', d: 16 },
+    { t: '<span class="c">→ 2.4M señales/segundo · latencia 11ms</span>', d: 16 },
+    { t: '<span class="c">→ precisión: 99.1% · fallos: 0</span>', d: 16 },
+    { t: '<span class="p">✓ sistema estrenado.</span>', d: 26 },
+    { t: '', d: 0 },
+    { t: '<span class="p">$</span> axioma metrics --clients', d: 30 },
+    { t: '<span class="c">→ valor generado: $380M · países: 12</span>', d: 16 },
+    { t: '<span class="p">✓ lo imposible, en producción.</span>', d: 26 },
+  ];
+
+  let started = false;
+  function typeLine(i) {
+    if (i >= script.length) {
+      setTimeout(() => { body.innerHTML = ''; typeLine(0); }, 6000);
+      return;
+    }
+    const { t, d } = script[i];
+    if (!t) { body.innerHTML += '\n'; typeLine(i + 1); return; }
+    const tmp = document.createElement('div');
+    tmp.innerHTML = t;
+    const span = tmp.firstChild;
+    const text = span.textContent;
+    span.textContent = '';
+    body.appendChild(span);
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    caret.textContent = '▌';
+    body.appendChild(caret);
+    let j = 0;
+    (function tick() {
+      if (j < text.length) {
+        span.textContent += text[j++];
+        setTimeout(tick, prefersReduced ? 0 : d);
+      } else {
+        caret.remove();
+        body.appendChild(document.createTextNode('\n'));
+        setTimeout(() => typeLine(i + 1), 140);
+      }
+    })();
+  }
+
+  new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      typeLine(0);
+      obs.disconnect();
+    }
+  }, { threshold: 0.4 }).observe(body);
+}
+
+/* ═══════════ SCRAMBLE (texto que se descifra) ═══════════ */
+function initScramble() {
+  const CHARS = '01<>/{}[]$#%&*+=_ABCDEF';
+  document.querySelectorAll('[data-scramble]').forEach((el) => {
+    const nodes = [];
+    (function collect(n) {
+      n.childNodes.forEach((c) => {
+        if (c.nodeType === 3) nodes.push({ node: c, final: c.textContent });
+        else collect(c);
+      });
+    })(el);
+
+    let done = false;
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting || done) return;
+      done = true;
+      obs.disconnect();
+      if (prefersReduced) return;
+      const start = performance.now();
+      const DUR = 900;
+      (function frame(now) {
+        const p = Math.min((now - start) / DUR, 1);
+        nodes.forEach(({ node, final }) => {
+          const reveal = Math.floor(final.length * p);
+          let out = final.slice(0, reveal);
+          for (let i = reveal; i < final.length; i++) {
+            out += final[i] === ' ' ? ' ' : CHARS[(Math.random() * CHARS.length) | 0];
+          }
+          node.textContent = out;
+        });
+        if (p < 1) requestAnimationFrame(frame);
+      })(start);
+    }, { threshold: 0.5 }).observe(el);
+  });
+}
+
+/* ═══════════ LLUVIA DE CÓDIGO (CTA) ═══════════ */
+function initRain() {
+  const canvas = document.getElementById('rain');
+  if (!canvas || prefersReduced) return;
+  const ctx = canvas.getContext('2d');
+  const CHARS = '01';
+  let cols, drops, fontSize;
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    fontSize = 13;
+    cols = Math.floor(canvas.width / (fontSize * 1.6));
+    drops = Array.from({ length: cols }, () => Math.random() * -60);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let visible = false;
+  new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0 })
+    .observe(canvas);
+
+  let last = 0;
+  (function loop(now) {
+    requestAnimationFrame(loop);
+    if (!visible || now - last < 66) return;
+    last = now;
+    ctx.fillStyle = 'rgba(5,5,5,0.16)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+    for (let i = 0; i < cols; i++) {
+      const glow = Math.random() > 0.985;
+      ctx.fillStyle = glow ? 'rgba(224,30,43,0.85)' : 'rgba(245,243,239,0.10)';
+      ctx.fillText(CHARS[(Math.random() * CHARS.length) | 0], i * fontSize * 1.6, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  })(0);
 }
 
 /* ═══════════ ANIMACIONES GSAP ═══════════ */
@@ -207,7 +361,7 @@ function initAnimations() {
   tl.to('.hero__line > span', { y: 0, duration: 1.3, stagger: 0.14 })
     .to('.reveal-line', { opacity: 1, y: 0, duration: 1, stagger: 0.12 }, '-=0.8')
     .from('.hero__actions .btn', { opacity: 0, y: 20, duration: 0.8, stagger: 0.1 }, '-=0.6')
-    .from('.hero__meta', { opacity: 0, duration: 1 }, '-=0.5');
+    .from('.hero__meta, .hero__hud', { opacity: 0, duration: 1 }, '-=0.5');
 
   if (prefersReduced) return;
 
@@ -226,7 +380,7 @@ function initAnimations() {
   const track = document.getElementById('marqueeTrack');
   if (track) {
     track.innerHTML += track.innerHTML;
-    gsap.to(track, { xPercent: -50, duration: 26, ease: 'none', repeat: -1 });
+    gsap.to(track, { xPercent: -50, duration: 24, ease: 'none', repeat: -1 });
   }
 
   // Manifiesto: revelado palabra a palabra
@@ -257,31 +411,28 @@ function initAnimations() {
   });
 
   // Reveals genéricos
-  gsap.utils.toArray('.section-label, .section-title, .service, .process__step, .quote, .cta__title, .cta__sub, .cta .btn').forEach((el) => {
+  gsap.utils.toArray('.section-label, .section-title, .service, .process__step, .quote, .terminal, .cta__title, .cta__sub, .cta .btn').forEach((el) => {
     gsap.from(el, {
       opacity: 0, y: 44, duration: 1, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     });
   });
 
-  // Obras: scroll horizontal con pin
-  const worksTrack = document.getElementById('worksTrack');
-  const worksPin = document.getElementById('worksPin');
-  if (worksTrack && worksPin) {
-    const getDistance = () => worksTrack.scrollWidth - window.innerWidth;
-    gsap.to(worksTrack, {
-      x: () => -getDistance(),
-      ease: 'none',
+  // Obras: apilado sticky — cada tarjeta se encoge y oscurece al ser cubierta
+  const works = gsap.utils.toArray('[data-work]');
+  works.forEach((card, i) => {
+    if (i === works.length - 1) return;
+    gsap.to(card, {
+      scale: 0.94, opacity: 0.45, filter: 'brightness(0.55)',
+      transformOrigin: 'center top', ease: 'none',
       scrollTrigger: {
-        trigger: worksPin,
-        start: 'top 12%',
-        end: () => '+=' + getDistance(),
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
+        trigger: works[i + 1],
+        start: 'top 90%',
+        end: 'top 12%',
+        scrub: true,
       },
     });
-  }
+  });
 
   // Footer: la palabra sube con parallax
   gsap.from('.footer__word', {
@@ -329,7 +480,7 @@ function initCursor() {
     });
   });
 
-  // Tilt 3D en tarjetas
+  // Tilt 3D en tarjetas (no en las obras apiladas: interfiere con su scale)
   document.querySelectorAll('[data-tilt]').forEach((el) => {
     el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
@@ -346,4 +497,7 @@ function initCursor() {
 /* ═══════════ ARRANQUE ═══════════ */
 initWebGL();
 initCursor();
+initTerminal();
+initScramble();
+initRain();
 initPreloader(() => initAnimations());
